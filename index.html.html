@@ -1,0 +1,390 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Guía de turnos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Concepto: banco de trabajo claro. Un celular ilustrado al centro reproduce la app real; la guía se recorre tocando el botón resaltado. */
+:root{
+  --bg:#edf2f5; --surface:#ffffff; --ink:#13222d; --muted:#53667a; --line:#d2dce4;
+  --accent:#0b6b88; --on-accent:#ffffff; --soft:#e3edf2;
+  --verde:#1a9b4b; --rojo:#d33a3a; --ambar:#d98a00; --gris:#6b7785; --disab:#b8c0c9; --azul:#1f6feb;
+  --ring:#1f9fd0; --bezel:#0f1a22;
+  /* pantalla del celular: es una captura de la app, igual en claro y oscuro */
+  --scr-bg:#f1f4f8; --scr-card:#ffffff; --scr-ink:#1c2733; --scr-line:#e1e6ec; --scr-estado:#eef3fa;
+  --scr-estado-x:#fff4e0; --scr-aviso-ink:#b25e00; --scr-aviso-bg:#fff4e0; --scr-muted:#6b7785; --scr-chip:#f4f6f9;
+  --font-d:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --font-b:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1920; --surface:#15262f; --ink:#e7eff4; --muted:#95a9b8; --line:#29414d;
+  --accent:#62c4df; --on-accent:#08222c; --soft:#1d3440; --bezel:#050b0f; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0d1920; --surface:#15262f; --ink:#e7eff4; --muted:#95a9b8; --line:#29414d;
+  --accent:#62c4df; --on-accent:#08222c; --soft:#1d3440; --bezel:#050b0f; color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--font-b);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+h1,h2,h3{font-family:var(--font-d);text-wrap:balance;margin:0;line-height:1.12}
+h1{font-size:clamp(30px,5vw,48px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:clamp(22px,3vw,30px);font-weight:700}
+h3{font-size:19px;font-weight:700}
+p{margin:0}
+.eyebrow{font:600 12px/1 var(--font-b);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lead{font-size:18px;color:var(--muted);max-width:60ch}
+header{display:flex;flex-direction:column;gap:14px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.lg{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 8px;font-size:14px}
+.sw{width:18px;height:18px;border-radius:50%}
+
+/* ---------- guía por pasos ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{font:600 15px var(--font-b);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 16px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.tab:focus-visible,.nav button:focus-visible,.dot:focus-visible,.seg:focus-visible,input[type=range]:focus-visible{outline:3px solid var(--ring);outline-offset:2px}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start;margin-top:20px}
+.cap{display:flex;flex-direction:column;gap:16px;min-width:0}
+.count{font:600 13px var(--font-b);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.cap h3{font-size:clamp(22px,3vw,30px)}
+.cap .txt{font-size:18px;max-width:46ch}
+.tip{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:15px;color:var(--ink);max-width:46ch}
+.dots{display:flex;gap:8px;flex-wrap:wrap}
+.dot{width:34px;height:8px;border-radius:4px;border:0;background:var(--line);cursor:pointer;padding:0}
+.dot[aria-current="step"]{background:var(--accent)}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav button{font:600 16px var(--font-b);border-radius:10px;padding:12px 20px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.nav button.pri{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.nav button:disabled{opacity:.45;cursor:not-allowed}
+.hint{font-size:14px;color:var(--muted)}
+
+/* ---------- celular ---------- */
+.phonecol{display:flex;justify-content:center}
+.phone{width:316px;max-width:100%;background:var(--bezel);border-radius:42px;padding:11px;box-shadow:0 18px 40px rgba(8,20,30,.28)}
+.pin{position:relative;border-radius:31px;overflow:hidden}
+.scr{height:580px;overflow-y:auto;background:var(--scr-bg);color:var(--scr-ink);font:12.5px/1.4 Arial,Helvetica,sans-serif;scrollbar-width:thin}
+.pad{padding:16px 14px 22px}
+.scr h4{margin:0 0 6px;font:700 17px Arial,Helvetica,sans-serif}
+.scr h5{margin:16px 0 6px;font:700 13.5px Arial,Helvetica,sans-serif}
+.scr label{display:block;margin-top:10px;font-size:12px}
+.fld{border:1px solid #c5ced8;background:#fff;border-radius:8px;padding:9px 10px;margin-top:4px;font-size:14px}
+.estado{margin:10px 0;padding:10px;background:var(--scr-estado);border-radius:8px;font-size:14px}
+.estado.x{background:var(--scr-estado-x)}
+.info{font-size:11.5px;color:var(--scr-muted);margin-bottom:8px}
+.info.av{color:var(--scr-aviso-ink);background:var(--scr-aviso-bg);padding:8px;border-radius:8px;font-size:12px}
+.b{display:block;width:100%;border:0;border-radius:9px;padding:11px;margin-top:6px;font:15px Arial,Helvetica,sans-serif;color:#fff;cursor:pointer;position:relative}
+.b.verde{background:var(--verde)} .b.rojo{background:var(--rojo)} .b.ambar{background:var(--ambar)} .b.azul{background:var(--azul)} .b.gris{background:var(--gris)}
+.b:disabled{background:var(--disab);cursor:default}
+.tap{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--ring);animation:pulso 1.5s ease-in-out infinite}
+@keyframes pulso{50%{box-shadow:0 0 0 3px #fff,0 0 0 10px rgba(31,159,208,.35)}}
+.nt{font-size:11.5px;color:var(--scr-muted);margin-top:8px}
+.okm{font-size:12.5px;color:var(--verde);margin-top:10px}
+.sem{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sem div{background:var(--scr-estado);border-radius:8px;padding:6px 8px;font-size:11px}
+.sem b{display:block;font-size:14px;margin-top:1px}
+.sem .debe b{color:var(--rojo)}
+.ext{border:1px solid var(--scr-line);border-radius:9px;padding:8px;margin:6px 0;font-size:12px;background:var(--scr-card)}
+.chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10.5px;font-weight:700;color:#fff;margin-left:4px}
+.chip.Pendiente{background:var(--ambar)} .chip.Aprobada{background:var(--verde)} .chip.Rechazada{background:var(--rojo)}
+.nadm{margin-top:5px;padding:5px 7px;background:var(--scr-chip);border-radius:6px;font-size:11.5px}
+.vacio{font-size:11.5px;color:var(--scr-muted)}
+.scrim{position:absolute;inset:0;background:rgba(15,25,40,.55);display:flex;align-items:center;padding:12px}
+.mod{background:#fff;color:var(--scr-ink);border-radius:12px;padding:14px;width:100%;font:12.5px/1.4 Arial,Helvetica,sans-serif}
+.mod h4{margin:0 0 8px;font:700 15px Arial,Helvetica,sans-serif}
+.mod .av{background:var(--scr-aviso-bg);color:var(--scr-aviso-ink);padding:8px;border-radius:8px;font-size:11.5px}
+.mod .fld{min-height:34px;font-size:13px}
+.mod .fld.ta{min-height:64px}
+.mod .fld.ph{color:#8a96a3}
+.mod .row2{display:flex;gap:6px;margin-top:10px}
+.mod .row2 .b{margin:0;font-size:13px;padding:10px 4px}
+.mod[hidden],.scrim[hidden]{display:none}
+
+/* ---------- control de hora ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:20px}
+.hora-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:28px;align-items:center}
+.clock{font:700 clamp(40px,7vw,64px)/1 var(--font-d);font-variant-numeric:tabular-nums}
+.bar{display:flex;height:34px;border-radius:8px;overflow:hidden;position:relative}
+.bar i{flex:1;display:block}
+.bar i.n{background:var(--verde)} .bar i.e{background:var(--ambar)} .bar i.d{background:var(--disab)}
+.mark{position:absolute;top:-4px;bottom:-4px;width:4px;background:var(--ink);border-radius:2px;transform:translateX(-2px);pointer-events:none}
+.ticks{position:relative;height:22px;font-size:13px;color:var(--muted);margin-top:6px}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+input[type=range]{width:100%;accent-color:var(--accent);margin:10px 0 0;height:28px}
+.toggles{display:flex;flex-wrap:wrap;gap:10px 22px}
+.toggles label{display:flex;gap:8px;align-items:center;font-size:15px;cursor:pointer}
+.toggles input{width:18px;height:18px;accent-color:var(--accent)}
+.demo .b{margin:0;font-size:16px;padding:14px;border-radius:10px}
+.res{font-size:17px;min-height:3.2em}
+.res b{font-weight:600}
+
+/* ---------- reglas ---------- */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.rule svg{width:40px;height:40px}
+.rule p{font-size:15px;color:var(--muted)}
+.ic{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+footer{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:18px}
+
+@media (max-width:820px){
+  .stage{grid-template-columns:minmax(0,1fr);gap:24px}
+  .phonecol{order:-1}
+  .hora-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){.tap{animation:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Control de turnos · Guía para trabajadores</div>
+    <h1>Así registras tu jornada</h1>
+    <p class="lead">Hay un solo botón de inicio. La app decide si es jornada normal o jornada extra según la hora: tú no eliges.</p>
+    <div class="legend" aria-label="Colores de los botones">
+      <span class="lg"><i class="sw" style="background:var(--verde)"></i>Verde: empiezas tu jornada normal</span>
+      <span class="lg"><i class="sw" style="background:var(--ambar)"></i>Ámbar: jornada extra</span>
+      <span class="lg"><i class="sw" style="background:var(--rojo)"></i>Rojo: terminas</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="t-guia">
+    <h2 id="t-guia">Recorre la app paso a paso</h2>
+    <p class="hint" style="margin-top:6px">Elige una situación. Para avanzar, toca el botón que brilla en el celular o usa Siguiente.</p>
+    <div class="tabs" role="tablist" id="tabs" style="margin-top:18px"></div>
+    <div class="stage">
+      <div class="cap" aria-live="polite">
+        <div class="count" id="count"></div>
+        <h3 id="ctitle"></h3>
+        <p class="txt" id="ctext"></p>
+        <div class="tip" id="ctip" hidden></div>
+        <div class="dots" id="dots"></div>
+        <div class="nav">
+          <button id="prev" type="button">Anterior</button>
+          <button id="next" type="button" class="pri">Siguiente</button>
+        </div>
+      </div>
+      <div class="phonecol">
+        <div class="phone">
+          <div class="pin">
+            <div class="scr" id="scr" aria-label="Pantalla de ejemplo de la app"></div>
+            <div class="scrim" id="scrim" hidden><div class="mod" id="mod"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-hora">
+    <div class="card">
+      <div>
+        <h2 id="t-hora">¿Qué botón me sale a esta hora?</h2>
+        <p class="hint" style="margin-top:6px">Ejemplo con un turno de 8:00 a. m. a 4:00 p. m. Mueve la hora.</p>
+      </div>
+      <div class="hora-grid">
+        <div>
+          <div class="clock" id="clock">10:00 a. m.</div>
+          <div style="position:relative;margin-top:14px">
+            <div class="bar" id="bar"></div>
+            <div class="mark" id="mark"></div>
+          </div>
+          <div class="ticks" id="ticks"></div>
+          <input type="range" id="rng" min="360" max="1320" step="5" value="600" aria-label="Hora del día">
+          <div class="toggles">
+            <label><input type="checkbox" id="chkFin"> Ya finalicé mi jornada hoy</label>
+            <label><input type="checkbox" id="chkLibre"> Hoy es domingo o festivo</label>
+          </div>
+        </div>
+        <div class="demo">
+          <button class="b" id="demoBtn" type="button" tabindex="-1" aria-hidden="true">Inicié jornada</button>
+        </div>
+      </div>
+      <p class="res" id="res"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-reglas">
+    <h2 id="t-reglas" style="margin-bottom:18px">Cuatro cosas para recordar</h2>
+    <div class="rules">
+      <div class="rule">
+        <svg viewBox="0 0 40 40" class="ic" aria-hidden="true"><circle cx="20" cy="22" r="13"/><path d="M20 14v8l5 3M16 4h8"/></svg>
+        <h3>10 minutos de margen</h3>
+        <p>Pasarte o quedarte corto por 10 minutos o menos no se cuenta. Más de eso: pasarte pide motivo, quedarte corto se suma a las horas que debes.</p>
+      </div>
+      <div class="rule">
+        <svg viewBox="0 0 40 40" class="ic" aria-hidden="true"><path d="M8 18h20v8a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8zM28 20h3a3 3 0 0 1 0 6h-3M14 6v5M20 6v5"/></svg>
+        <h3>El almuerzo no se marca</h3>
+        <p>La app lo descuenta sola de tus horas trabajadas. No tienes que tocar nada a mediodía.</p>
+      </div>
+      <div class="rule">
+        <svg viewBox="0 0 40 40" class="ic" aria-hidden="true"><rect x="6" y="8" width="28" height="26" rx="4"/><path d="M6 16h28M13 4v7M27 4v7"/></svg>
+        <h3>Domingos y festivos</h3>
+        <p>No hay jornada normal. Todo lo que trabajes es jornada extra, con cliente, motivo y aprobación. La app conoce los festivos de Colombia.</p>
+      </div>
+      <div class="rule">
+        <svg viewBox="0 0 40 40" class="ic" aria-hidden="true"><path d="M20 36s11-10 11-19a11 11 0 0 0-22 0c0 9 11 19 11 19z"/><circle cx="20" cy="17" r="4"/></svg>
+        <h3>Ubicación, solo dos veces</h3>
+        <p>Se toma al iniciar y al finalizar. No hay seguimiento. Acepta el permiso del celular y activa el GPS.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Si algo no te deja avanzar, lee el aviso gris bajo los botones. Si sigue sin funcionar, avisa al administrador.</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------------- Pasos ---------------- */
+const base = { v:'home', estado:{t:'Aún no has iniciado jornada'}, info:null, ini:{t:'Inicié jornada', c:'verde', dis:true}, fin:{dis:true},
+  aviso:'', ok:'', sem:{trab:'0 h 0 min', debe:'0 h 0 min', aprob:'0 h 0 min', pend:'0 h 0 min'}, ext:[], modal:null, target:null, focus:null };
+const S = o => Object.assign({}, base, o);
+const AVISO_EXTRA = 'Ya finalizaste tu jornada. Lo que trabajes ahora se registra como jornada extra.';
+const INFO_FIN = 'Ya completaste tu turno. Llevas 0 h 5 min de tiempo adicional; si pasa de 10 min se registra como hora extra y se te pedirá el cliente y el motivo.';
+const INFO_EXC = 'Ya completaste tu turno. Llevas 0 h 18 min de tiempo adicional; si pasa de 10 min se registra como hora extra y se te pedirá el cliente y el motivo.';
+const MOD_EXC = 'Tu jornada superó la duración de tu turno por 0 h 18 min. Escribe el cliente y el motivo de las horas extra; el administrador las revisará.';
+const MOD_EXT = 'Vas a finalizar una jornada extra de 1 h 30 min. Escribe el cliente y el motivo; el administrador la revisará.';
+const extA = est => ({ f:'2026-10-19', t:'Tiempo extra al final del turno', h:'16:02 – 16:20 · 0 h 18 min', cli:'Panadería Central', mot:'Falla del compresor, esperé al técnico', est:est });
+const extB = { f:'2026-10-19', t:'Jornada extra · Después de jornada', h:'18:30 – 20:00 · 1 h 30 min', cli:'Heladería Polar', mot:'Instalación nocturna', est:'Pendiente' };
+
+const SCEN = [
+ { name:'Jornada normal', steps:[
+  { title:'Ingresa con tu usuario y PIN', text:'Abre el enlace en tu celular y entra con tu usuario y tu PIN. Son personales: no los compartas.', tip:'Guarda el enlace como acceso directo en la pantalla de inicio.', scr:S({v:'login', target:'login'}) },
+  { title:'A tu hora, toca «Inicié jornada»', text:'El botón verde se habilita desde 10 minutos antes de tu hora de entrada. Cuando el celular pida permiso de ubicación, acéptalo.', scr:S({ini:{t:'Inicié jornada',c:'verde',dis:false}, target:'ini'}) },
+  { title:'Quedas conectado', text:'La pantalla muestra desde qué hora estás conectado y cuánto te falta para completar tu turno. No tienes que hacer nada más mientras trabajas.',
+    scr:S({estado:{t:'Conectado desde las 08:02'}, info:{t:'Te faltan 2 h 10 min para completar tu turno.'}, ini:{t:'Inicié jornada',c:'verde',dis:true}, fin:{dis:false}}) },
+  { title:'Al terminar, toca «Jornada finalizada»', text:'Si completaste tu turno con no más de 10 minutos de diferencia, la jornada se cierra sin preguntarte nada.',
+    scr:S({estado:{t:'Conectado desde las 08:02'}, info:{t:INFO_FIN, a:true}, fin:{dis:false}, target:'fin'}) },
+  { title:'Listo, jornada cerrada', text:'Tu salida quedó a las 16:05 y se sumaron tus horas de la semana. El botón ámbar que aparece abajo es solo para trabajo extra: si no vas a trabajar más, cierra la app.',
+    scr:S({estado:{t:'Jornada finalizada a las 16:05'}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:false}, aviso:AVISO_EXTRA, ok:'Jornada finalizada.', sem:{trab:'7 h 3 min',debe:'0 h 0 min',aprob:'0 h 0 min',pend:'0 h 0 min'}}) }
+ ]},
+ { name:'Me pasé del turno', steps:[
+  { title:'Pasaste tu turno y sigues trabajando', text:'La app te avisa que ya completaste tu turno. Cuando termines, toca «Jornada finalizada», igual que siempre.',
+    scr:S({estado:{t:'Conectado desde las 08:02'}, info:{t:INFO_EXC, a:true}, fin:{dis:false}, target:'fin'}) },
+  { title:'Se abre una ventana con dos recuadros', text:'Cliente y Motivo de las horas extra. Los dos son obligatorios: sin ellos no se cierra la jornada.', tip:'Si tocas Cancelar, tu jornada sigue abierta y el tiempo sigue corriendo.',
+    scr:S({estado:{t:'Conectado desde las 08:02'}, info:{t:INFO_EXC, a:true}, fin:{dis:false}, modal:{info:MOD_EXC, cli:'', mot:''}}), auto:true },
+  { title:'Escribe el cliente y el motivo', text:'Di para quién trabajaste ese tiempo y por qué se extendió. Después toca «Enviar y finalizar».',
+    scr:S({estado:{t:'Conectado desde las 08:02'}, info:{t:INFO_EXC, a:true}, fin:{dis:false}, modal:{info:MOD_EXC, cli:'Panadería Central', mot:'Falla del compresor, esperé al técnico'}, target:'send'}) },
+  { title:'Queda pendiente de aprobación', text:'Tu hora de salida es la del momento en que tocaste finalizar (16:20), aunque te hayas demorado escribiendo.',
+    scr:S({estado:{t:'Jornada finalizada a las 16:20'}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:false}, aviso:AVISO_EXTRA, ok:'Jornada finalizada. Quedó pendiente de aprobación del administrador.', sem:{trab:'7 h 18 min',debe:'0 h 0 min',aprob:'0 h 0 min',pend:'0 h 18 min'}, ext:[extA('Pendiente')], focus:'exts'}) }
+ ]},
+ { name:'Jornada extra', steps:[
+  { title:'Fuera de tu horario el botón cambia', text:'Se pone ámbar y dice «Iniciar jornada extra». Aparece antes de tu entrada (con más de 10 minutos de anticipación), después de tu salida, y todo el día en domingos y festivos.',
+    scr:S({estado:{t:'Jornada finalizada a las 16:05'}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:false}, aviso:AVISO_EXTRA, target:'ini'}) },
+  { title:'Trabajas tu jornada extra', text:'Quedó en curso desde las 18:30. No puedes iniciar otra mientras esta siga abierta. Para terminarla, usas el mismo botón rojo.',
+    scr:S({estado:{t:'Jornada extra en curso desde las 18:30 (Después de jornada)', x:true}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:true}, fin:{dis:false}, target:'fin'}) },
+  { title:'Al finalizar, la misma ventana', text:'Escribe el cliente y el motivo y toca «Enviar y finalizar». Aquí no hay tiempo regular: toda la jornada extra va a aprobación.',
+    scr:S({estado:{t:'Jornada extra en curso desde las 18:30 (Después de jornada)', x:true}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:true}, fin:{dis:false}, modal:{info:MOD_EXT, cli:'Heladería Polar', mot:'Instalación nocturna'}, target:'send'}) },
+  { title:'También queda pendiente', text:'Aparece en tu lista como «Jornada extra» con su horario y su duración. El recargo nocturno lo calcula la app, tú no haces cuentas.',
+    scr:S({estado:{t:'Jornada finalizada a las 20:00'}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:false}, aviso:AVISO_EXTRA, ok:'Jornada finalizada. Quedó pendiente de aprobación del administrador.', sem:{trab:'7 h 3 min',debe:'0 h 0 min',aprob:'0 h 0 min',pend:'1 h 30 min'}, ext:[extB], focus:'exts'}) }
+ ]},
+ { name:'Decisión y mi semana', steps:[
+  { title:'Mientras decide, dice «Pendiente»', text:'El administrador revisa el cliente, el motivo y la ubicación de cada extra. No tienes que volver a entrar: la pantalla se actualiza sola cada 30 segundos.',
+    scr:S({estado:{t:'Jornada finalizada a las 16:20'}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:false}, sem:{trab:'7 h 18 min',debe:'0 h 0 min',aprob:'0 h 0 min',pend:'0 h 18 min'}, ext:[extA('Pendiente')], focus:'exts'}) },
+  { title:'Verde: aprobada', text:'Esas horas se tendrán en cuenta para el pago y pasan a «Extras aprobadas» de tu semana.',
+    scr:S({estado:{t:'Jornada finalizada a las 16:20'}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:false}, sem:{trab:'7 h 18 min',debe:'0 h 0 min',aprob:'0 h 18 min',pend:'0 h 0 min'}, ext:[extA('Aprobada')], focus:'exts'}) },
+  { title:'Rojo: rechazada', text:'No se reconocen. Si el administrador dejó una nota, la ves debajo de la extra para saber por qué.',
+    scr:S({estado:{t:'Jornada finalizada a las 16:20'}, ini:{t:'Iniciar jornada extra',c:'ambar',dis:false}, sem:{trab:'7 h 18 min',debe:'0 h 0 min',aprob:'0 h 0 min',pend:'0 h 0 min'}, ext:[Object.assign(extA('Rechazada'),{nota:'No estaba autorizada'})], focus:'exts'}) },
+  { title:'Si sales antes, quedas debiendo', text:'Si terminas con más de 10 minutos menos que tu turno, la diferencia suma en «Horas que debes». No pide motivo y no es una extra.',
+    scr:S({estado:{t:'Jornada finalizada a las 15:00'}, ini:{t:'Inicié jornada',c:'ambar',dis:true}, aviso:'Ya finalizaste tu jornada. La jornada extra se habilita a partir de las 16:00.', sem:{trab:'6 h 0 min',debe:'1 h 0 min',aprob:'0 h 0 min',pend:'0 h 0 min'}}) }
+ ]}
+];
+
+let sc = 0, st = 0;
+
+function extHtml(e){
+  const c = e.est;
+  return '<div class="ext"><b>' + e.f + '</b> · ' + e.t + '<span class="chip ' + c + '">' + (c === 'Pendiente' ? 'Pendiente de aprobación' : c) + '</span><br>' +
+    e.h + '<br>Cliente: ' + e.cli + '<br>Motivo: ' + e.mot +
+    (e.nota ? '<div class="nadm"><b>Administrador:</b> ' + e.nota + '</div>' : '') + '</div>';
+}
+function renderPhone(s){
+  const scr = $('scr');
+  if (s.v === 'login') {
+    scr.innerHTML = '<div class="pad"><h4>Control de turnos</h4><label>Usuario</label><div class="fld">usuario</div><label>PIN</label><div class="fld">••••</div>' +
+      '<button type="button" class="b azul' + (s.target === 'login' ? ' tap' : '') + '" data-t="login">Ingresar</button></div>';
+  } else {
+    scr.innerHTML = '<div class="pad"><h4>Hola, Nombre Apellido</h4><div>Tu turno de hoy: <b>08:00 a 16:00</b></div>' +
+      '<div class="estado' + (s.estado.x ? ' x' : '') + '">' + s.estado.t + '</div>' +
+      (s.info ? '<div class="info' + (s.info.a ? ' av' : '') + '">' + s.info.t + '</div>' : '') +
+      '<button type="button" class="b ' + s.ini.c + (s.target === 'ini' ? ' tap' : '') + '" data-t="ini"' + (s.ini.dis ? ' disabled' : '') + '>' + s.ini.t + '</button>' +
+      '<button type="button" class="b rojo' + (s.target === 'fin' ? ' tap' : '') + '" data-t="fin"' + (s.fin.dis ? ' disabled' : '') + '>Jornada finalizada</button>' +
+      (s.aviso ? '<div class="nt">' + s.aviso + '</div>' : '') + (s.ok ? '<div class="okm">' + s.ok + '</div>' : '') +
+      '<h5>Tu semana</h5><div class="sem"><div>Horas trabajadas<b>' + s.sem.trab + '</b></div>' +
+      '<div class="' + (s.sem.debe !== '0 h 0 min' ? 'debe' : '') + '">Horas que debes<b>' + s.sem.debe + '</b></div>' +
+      '<div>Extras aprobadas<b>' + s.sem.aprob + '</b></div><div>Extras pendientes<b>' + s.sem.pend + '</b></div></div>' +
+      '<h5 id="hext">Tus horas extra (últimos 14 días)</h5>' +
+      (s.ext.length ? s.ext.map(extHtml).join('') : '<div class="vacio">Aún no tienes horas extra registradas.</div>') + '</div>';
+  }
+  const m = s.modal, scrim = $('scrim');
+  if (m) {
+    $('mod').innerHTML = '<h4>Motivo de las horas extra</h4><div class="av">' + m.info + '</div>' +
+      '<label style="display:block;margin-top:10px">Cliente</label><div class="fld' + (m.cli ? '' : ' ph') + '">' + (m.cli || 'Nombre del cliente o lugar') + '</div>' +
+      '<label style="display:block;margin-top:8px">Motivo de las horas extra</label><div class="fld ta' + (m.mot ? '' : ' ph') + '">' + (m.mot || '¿Por qué se extendió el trabajo?') + '</div>' +
+      '<div class="row2"><button type="button" class="b rojo' + (s.target === 'send' ? ' tap' : '') + '" data-t="send">Enviar y finalizar</button><button type="button" class="b gris" data-t="cancel">Cancelar</button></div>';
+    scrim.hidden = false;
+  } else scrim.hidden = true;
+  if (s.focus === 'exts' && $('hext')) scr.scrollTo({ top: $('hext').offsetTop - 12, behavior: REDUCE ? 'auto' : 'smooth' });
+  else scr.scrollTop = 0;
+}
+function render(){
+  const sce = SCEN[sc], step = sce.steps[st];
+  document.querySelectorAll('.tab').forEach((t, i) => t.setAttribute('aria-selected', i === sc ? 'true' : 'false'));
+  $('count').textContent = 'Paso ' + (st + 1) + ' de ' + sce.steps.length + ' · ' + sce.name;
+  $('ctitle').textContent = step.title;
+  $('ctext').textContent = step.text;
+  $('ctip').hidden = !step.tip; $('ctip').textContent = step.tip || '';
+  $('dots').innerHTML = sce.steps.map((_, i) => '<button type="button" class="dot" data-i="' + i + '" aria-label="Ir al paso ' + (i + 1) + '"' + (i === st ? ' aria-current="step"' : '') + '></button>').join('');
+  $('prev').disabled = st === 0;
+  $('next').textContent = st === sce.steps.length - 1 ? 'Volver al inicio' : 'Siguiente';
+  renderPhone(step.scr);
+}
+function next(){ const n = SCEN[sc].steps.length; st = st >= n - 1 ? 0 : st + 1; render(); }
+function prev(){ if (st > 0) { st--; render(); } }
+$('tabs').innerHTML = SCEN.map((s, i) => '<button type="button" role="tab" class="tab" data-i="' + i + '">' + s.name + '</button>').join('');
+$('tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) { sc = +b.dataset.i; st = 0; render(); } });
+$('dots').addEventListener('click', e => { const b = e.target.closest('.dot'); if (b) { st = +b.dataset.i; render(); } });
+$('next').addEventListener('click', next); $('prev').addEventListener('click', prev);
+function tapHandler(e){
+  const b = e.target.closest('[data-t]'); if (!b || b.disabled) return;
+  const step = SCEN[sc].steps[st];
+  if (b.dataset.t === step.scr.target) next();
+}
+$('scr').addEventListener('click', tapHandler); $('scrim').addEventListener('click', tapHandler);
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input,textarea,select')) return;
+  if (e.key === 'ArrowRight') next(); else if (e.key === 'ArrowLeft') prev();
+});
+render();
+
+/* ---------------- ¿Qué botón me sale? (misma regla que usa la app) ---------------- */
+const ENT = 480, SAL = 960, TOL = 10;
+const f12 = m => { const h = Math.floor(m / 60), mm = m % 60, p = h >= 12 ? 'p. m.' : 'a. m.'; return ((h + 11) % 12 + 1) + ':' + String(mm).padStart(2, '0') + ' ' + p; };
+function modo(min, fin, libre){
+  if (libre) return { k:'e', dis:false, t:'Iniciar jornada extra', r:'<b>Domingo o festivo:</b> no hay jornada normal. Todo lo que trabajes es jornada extra y va a aprobación.' };
+  if (fin) return min >= SAL
+    ? { k:'e', dis:false, t:'Iniciar jornada extra', r:'<b>Ya finalizaste y pasó tu hora de salida:</b> puedes iniciar una jornada extra.' }
+    : { k:'d', dis:true, t:'Iniciar jornada extra', r:'<b>Ya finalizaste tu jornada.</b> La jornada extra se habilita desde las ' + f12(SAL) + '.' };
+  if (min < ENT - TOL) return { k:'e', dis:false, t:'Iniciar jornada extra', r:'<b>Antes de las ' + f12(ENT - TOL) + ':</b> se registra como jornada extra, con cliente, motivo y aprobación.' };
+  if (min >= SAL) return { k:'e', dis:false, t:'Iniciar jornada extra', r:'<b>Fuera de tu horario:</b> se registra como jornada extra, con cliente, motivo y aprobación.' };
+  return { k:'n', dis:false, t:'Inicié jornada', r:'<b>Dentro de tu horario:</b> es jornada normal. Si pasas tu turno por más de 10 minutos, al finalizar se pide cliente y motivo.' };
+}
+const bar = $('bar'), MIN0 = 360, SPAN = 960;
+for (let m = MIN0; m < MIN0 + SPAN; m += 10) bar.appendChild(document.createElement('i'));
+$('ticks').innerHTML = [[360,'6 a. m.','0'],[480,'8 a. m.','-50%'],[960,'4 p. m.','-50%'],[1320,'10 p. m.','-100%']]
+  .map(t => '<span style="left:' + ((t[0] - MIN0) / SPAN * 100) + '%;transform:translateX(' + t[2] + ')">' + t[1] + '</span>').join('');
+function hora(){
+  const v = +$('rng').value, fin = $('chkFin').checked, libre = $('chkLibre').checked;
+  $('clock').textContent = f12(v);
+  bar.querySelectorAll('i').forEach((c, i) => { c.className = modo(MIN0 + i * 10 + 5, fin, libre).k; });
+  $('mark').style.left = ((v - MIN0) / SPAN * 100) + '%';
+  const r = modo(v, fin, libre), b = $('demoBtn');
+  b.textContent = r.t; b.disabled = r.dis;
+  b.style.background = r.dis ? 'var(--disab)' : (r.k === 'n' ? 'var(--verde)' : 'var(--ambar)');
+  $('res').innerHTML = r.r;
+}
+['rng', 'chkFin', 'chkLibre'].forEach(id => $(id).addEventListener('input', hora));
+hora();
+</script>
+
+</body></html>
